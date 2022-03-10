@@ -42,10 +42,10 @@ class ServiceAccessLayer(BankingServiceInterface):
             raise BadAccountInfo("Please pass in a integer for your Id")
         elif type(cust.username) != str:  # checking for data type of customer_id
             raise BadAccountInfo("Please pass in a integer for your Id")
-        for existing_customer_id in self.account_dao.customer_list:  # loops through customer_list
-            if existing_customer_id.customer_id == cust.customer_id:  # checks if the input customer_id matches the looped
-                # one in the list, avoiding duplicates
-                raise BadAccountInfo("Please pass in different integer for your customer Id")
+        # for existing_customer_id in self.account_dao.customer_list:  # loops through customer_list
+        #     if existing_customer_id.customer_id == cust.customer_id:  # checks if the input customer_id matches the looped
+        #         # one in the list, avoiding duplicates
+        #         raise BadAccountInfo("Please pass in different integer for your customer Id")
         if len(cust.username) > 20:
             raise BadAccountInfo("username cannot be over 20 characters")
         else:
@@ -73,30 +73,6 @@ class ServiceAccessLayer(BankingServiceInterface):
                 -1] and existing_customer_id.customer_id != acct.customer_id:
                 raise BadAccountInfo("Sorry, wrong customer_id. Please pass in a valid integer for your Id")
 
-        # def update_account_deposit_by_id(self, cust_id, amount):
-
-    #     # takes an extra parameter to add money)
-    #     regex = '^[0-9]+$'
-    #     if amount == str(amount) and (re.search(regex, cust_id)):
-    #         amount = int(amount)
-    #     if type(amount) != int:
-    #         raise BadAccountInfo("No matches found: " "Try again with the correct information")
-    #     if type(amount) == int:
-    #         if cust_id == str(cust_id) and (re.search(regex, cust_id)):
-    #             cust_id = int(cust_id)
-    #         if type(cust_id) != int:
-    #             raise BadAccountInfo("No matches found: " "Try again with the correct information")
-    #         if type(cust_id) == int:
-    #             for customer in self.account_dao.customer_list:
-    #                 if customer.customer_id == cust_id:
-    #                     for account in self.account_dao.acct_list:
-    #                         if customer.customer_id == account.customer_id:
-    #                             account.balance += amount # adds money to acct.balance
-    #                             return account.convert_to_dictionary_acct_balance() # returns new input's acct.balance
-    #                         if account == self.account_dao.acct_list[-1] and customer.customer_id != account.customer_id:
-    #                             raise BadAccountInfo("No matches found: Try again with the correct information")
-    #                 if customer == self.account_dao.customer_list[-1] and customer.customer_id != cust_id:
-    #                     raise BadAccountInfo("Customer Id not found")
 
     def update_account_deposit_by_id(self, cust_id, amount):
         # takes an extra parameter to add money)

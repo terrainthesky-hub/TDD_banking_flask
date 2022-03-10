@@ -26,6 +26,7 @@ class AccountDAOImp(AccountDAOInterface):
         self.acct_id_generator = 1
         self.customer_id_gen = 1000
         self.acct_customer_list = []
+        self.customer_name_list = []
 
     def create_account(self, acct):
         if type(acct.acct_id) != int:  # checking for data type of acct_id
@@ -54,11 +55,12 @@ class AccountDAOImp(AccountDAOInterface):
         if len(cust.username) > 20:  # username can't be over 20 characters
             print("username cannot be over 20 characters")
         else:
-            for existing_customer_id in self.customer_list:  # looping through customer_list
-                if existing_customer_id.customer_id == cust.customer_id:  # checking if there's duplicates
-                    raise BadAccountInfo("Please pass in a different integer for your Id")
-                if existing_customer_id.username in self.customer_list:  # checks for duplicate usernames in customer_list
-                    raise BadAccountInfo("Please pass in a different username")
+            # for existing_customer_id in self.customer_name_list:  # looping through customer_list
+            #     if existing_customer_id.customer_id == cust.customer_id:  # checking if there's duplicates
+            #         raise BadAccountInfo("Please pass in a different integer for your Id")
+                # if existing_customer_id.username in self.customer_name_list:  # checks for duplicate usernames in customer_list
+                #     raise BadAccountInfo("Please pass in a different username")
+            # self.customer_name_list.append(cust.username)
             cust.customer_id = self.customer_id_gen  # sets the new customer_id of the input parameter
             self.customer_id_gen += 1  # increments customer_id_generator
             self.customer_list.append(cust)  # adds customer object to customer_list with a modified customer_id
@@ -128,26 +130,6 @@ class AccountDAOImp(AccountDAOInterface):
             self.acct_customer_list = []
             self.acct_multiple_lists = []
 
-    # def get_account_number_and_balance_cust_id(self, cust_id):
-    #     if type(cust_id) != int:
-    #         raise BadAccountInfo("Please enter a valid integer")
-    #     try:
-    #         for customer in self.customer_list:  # loops through customer_list
-    #             if customer.customer_id == cust_id:
-    #                 for account in self.acct_list:  # checks if customer customer_id equals the acct customer_id
-    #                     if customer.customer_id == account.customer_id:
-    #                         self.acct_customer_list.append([account.acct_id, account.balance])
-    #
-    #                                                                 #adds the input acct_id and acct.balance
-    #                                                             #to the acct_customer_list inside brackets
-    #         acct_balance = [[x,y] for x,y in (self.acct_customer_list)]  # list comprehension to get all the acct acct_ids
-    #         #and acct.balances into a nested bracket for separating into the acct_customer_list
-    #         id_balance = (json.dumps(self.acct_customer_list))
-    #         # return id_balance(convert_to_dictionary_acct_id_and_balance())
-    #         return (acct_balance)
-    #     finally:
-    #         self.acct_customer_list = []  # resets the acct_customer_list so it can't be accessed for other people
-
     def get_account_information_balance(self, cust_id):
         new_cust = cust_id
         regex = '^[0-9]+$'
@@ -167,12 +149,3 @@ class AccountDAOImp(AccountDAOInterface):
                     return account.convert_to_dictionary_acct_balance()
                 if account == self.acct_list[-1] and new_cust.customer_id != account.customer_id:
                     raise BadAccountInfo("Account not found")
-
-        # elif customer.customer_id not in :
-        #     raise BadAccountInfo("Please provide a valid customer Id as an integer")
-
-                # else:
-                #     raise BadAccountInfo("Please provide a valid account Id as an integer")
-
-            # if customer.customer_id == acct.customer_id:  #checks if customer.customer_id equals input.customer_id
-            #     return acct.balance # returns how much is left in the acct balance
