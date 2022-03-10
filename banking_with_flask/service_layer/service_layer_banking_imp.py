@@ -93,8 +93,7 @@ class ServiceAccessLayer(BankingServiceInterface):
                             if customer.customer_id == account.customer_id:
                                 account.balance += amount  # adds money to acct.balance
                                 return account.convert_to_dictionary_acct_balance()  # returns new input's acct.balance
-                            if account == self.account_dao.acct_list[
-                                -1] and customer.customer_id != account.customer_id:
+                            if account == self.account_dao.acct_list[-1] and customer.customer_id != account.customer_id:
                                 raise BadAccountInfo("Customer Id not found")
                     if customer == self.account_dao.customer_list[-1] and customer.customer_id != cust_id:
                         raise BadAccountInfo("Customer Id not found")
@@ -155,7 +154,7 @@ class ServiceAccessLayer(BankingServiceInterface):
                 if new_cust.customer_id == account.customer_id:
                     self.account_dao.acct_list.pop(i1)
                     return {"Sorry to lose your business": "Account removed"}
-                if account not in self.acct_list and new_cust.customer_id != account.customer_id:
+                if account == self.account_dao.acct_list[-1] and new_cust.customer_id != account.customer_id:
                     raise BadAccountInfo("No matches found: " "Try again with the correct information")
 
     def delete_account_and_customer_by_id(self, cust_id):
