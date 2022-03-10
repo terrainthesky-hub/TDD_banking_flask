@@ -124,6 +124,7 @@ class ServiceAccessLayer(BankingServiceInterface):
                         raise BadAccountInfo("Customer Id not found")
 
     def update_account_withdraw_by_id(self, cust_id, amount):
+        new = cust_id
         regex = '^[0-9]+$'
         if amount == str(amount) and (re.search(regex, cust_id)):
             amount = int(amount)
@@ -137,25 +138,26 @@ class ServiceAccessLayer(BankingServiceInterface):
             if type(cust_id) == int:
                 for customer in self.account_dao.customer_list:
                     if customer.customer_id == cust_id:
-                        for account in self.account_dao.acct_list:
-                            if customer.customer_id == account.customer_id:
-                                if account.balance >= amount:  # checks if there's more
-
-                                    # money in the input balance than can be removed
-                                    account.balance = account.balance - amount  # subtracts amount
-                                    # from input.balance
-                                    return account.balance.convert_to_dictionary_acct_balance()
-                                else:
-                                    raise BadAccountInfo("Not enough funds to withdraw this amount")
-                            if account == self.account_dao.acct_list[
-                                -1] and customer.customer_id != account.customer_id:
-                                raise BadAccountInfo("No matches found: " "Try again with the correct information")
-                            if len(self.account_dao.acct_list) == 0:
-                                raise BadAccountInfo("Customer Id not found")
-                    if customer != self.account_dao.customer_list[-1] and customer.customer_id != cust_id:
+                        new = customer
+                        break
+                    if customer == self.account_dao.customer_list[-1] and customer.customer_id != cust_id:
                         raise BadAccountInfo("Customer Id not found")
                     if len(self.account_dao.customer_list) == 0:
                         raise BadAccountInfo("Customer Id not found")
+                for account in self.account_dao.acct_list:
+                    if new.customer_id == account.customer_id:
+                        if account.balance >= amount:  # checks if there's more
+                            # money in the input balance than can be removed
+                            account.balance = account.balance - amount  # subtracts amount
+                            # from input.balance
+                            return account.convert_to_dictionary_acct_balance()
+                        else:
+                            raise BadAccountInfo("Not enough funds to withdraw this amount")
+                    if account == self.account_dao.acct_list[-1] and customer.customer_id != account.customer_id:
+                        raise BadAccountInfo("No matches found: " "Try again with the correct information")
+                    if len(self.account_dao.acct_list) == 0:
+                        raise BadAccountInfo("Customer Id not found")
+
 
     def delete_account_by_id(self, cust_id):
         new_cust = cust_id

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TTD_flask_banking.iml" filepath="$PROJECT_DIR$/.idea/TTD_flask_banking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TDD_banking_flask.iml" filepath="$PROJECT_DIR$/.idea/TDD_banking_flask.iml" />
     </modules>
   </component>
 </project>
