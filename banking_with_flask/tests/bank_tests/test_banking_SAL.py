@@ -117,7 +117,18 @@ def test_transfer_money_from_acct1_to_acct2_success():
         deposit_acct = Account(2, 1001, 100)
         amount = 100
         result = account_service.transfer_money_between_accounts_from_acct1_to_acct2(withdraw_acct, deposit_acct, amount)
-        assert result == [{'balance': 0}, {"balance": 200}]
+        assert result == [
+    {
+        "acctId": 1,
+        "balance": 0,
+        "customerId": 1000
+    },
+    {
+        "acctId": 2,
+        "balance": 200,
+        "customerId": 1001
+    }
+]
     except BadAccountInfo as e:
         assert str(e) == "Customer Id not found"
 

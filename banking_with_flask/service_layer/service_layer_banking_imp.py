@@ -188,14 +188,16 @@ class ServiceAccessLayer(BankingServiceInterface):
             raise BadAccountInfo("Please provide a valid customer Id as an integer")
         if type(amount) == int:
             for customer in self.account_dao.customer_list:
-                if customer.customer_id == withdraw_acct.customer_id:  # and deposit_acct.customer_id:
+                if customer.customer_id == withdraw_acct.customer_id: # and deposit_acct.customer_id:
                     if withdraw_acct.balance - amount < 0:
                         raise BadAccountInfo("You do not have enough money to withdraw")
-                if customer == self.account_dao.customer_list[-1] and customer.customer_id != withdraw_acct.customer_id:
-                    raise BadAccountInfo("Customer Id not found")
-            withdraw_acct.balance = withdraw_acct.balance - amount
-            for account in self.account_dao.customer_list:
-                if account.customer_id == deposit_acct.customer_id:
-                    deposit_acct.balance = deposit_acct.balance + amount
-            return [withdraw_acct.convert_to_dictionary_acct_balance(),
-                    deposit_acct.convert_to_dictionary_acct_balance()]
+                # if customer == self.account_dao.customer_list[-1] and customer.customer_id != withdraw_acct.customer_id:
+                    else:
+                        withdraw_acct.balance = withdraw_acct.balance - amount
+            # withdraw_acct.balance = withdraw_acct.balance - amount
+                    for account in self.account_dao.customer_list:
+                        if account.customer_id == deposit_acct.customer_id:
+                            deposit_acct.balance = deposit_acct.balance + amount
+                    return [withdraw_acct.convert_to_dictionary_acct(),
+                            deposit_acct.convert_to_dictionary_acct()]
+            raise BadAccountInfo("Customer Id not found")

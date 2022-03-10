@@ -153,20 +153,20 @@ def test_get_all_acct_info_cust_id():
         }
     ]
 
-# def test_get_all_acct_info_cust_id_str_success():
-#     # test_acct = Account(1, 1000, 100)
-#     result = account_dao.get_account_number_and_balance_cust_id("1001")
-#     assert result == [{
-#         "acctId": 2,
-#         "customerId": 1001,
-#         "balance": 100
-#     },
-#         {
-#             "acctId": 3,
-#             "customerId": 1001,
-#             "balance": 100
-#         }
-#     ]
+def test_get_all_acct_info_cust_id_str_success():
+    # test_acct = Account(1, 1000, 100)
+    result = account_dao.get_account_number_and_balance_cust_id("1001")
+    assert result == [{
+        "acctId": 2,
+        "customerId": 1001,
+        "balance": 100
+    },
+        {
+            "acctId": 3,
+            "customerId": 1001,
+            "balance": 100
+        }
+    ]
 
 def test_get_all_acct_info_cust_id_fail():
     # test_acct = Account(1, 1000, 100)

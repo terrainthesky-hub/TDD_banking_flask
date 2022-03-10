@@ -240,7 +240,7 @@ def transfer_money_between_accounts_from_acct1_to_acct2_by_account_obj(amount: i
         acct_data1: dict = request.get_json()
         # acct_data2: dict = request.get_json()
         acct1 = Account(acct_data1["acctId"], acct_data1["customerId"], acct_data1["balance"])
-        acct2 = Account(acct1["acctId2"], acct1["customerId2"], acct1["balance2"])
+        acct2 = Account(acct_data1["acctId2"], acct_data1["customerId2"], acct_data1["balance2"])
         # may need naming convention conversion
         result = account_service.transfer_money_between_accounts_from_acct1_to_acct2(acct1, acct2, amount)
         result_dictionary = result
