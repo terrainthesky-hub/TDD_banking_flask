@@ -158,8 +158,6 @@ class ServiceAccessLayer(BankingServiceInterface):
                     raise BadAccountInfo("No matches found: " "Try again with the correct information")
 
     def delete_account_and_customer_by_id(self, cust_id):
-        new_cust = cust_id
-        indexing = cust_id
         regex = '^[0-9]+$'
         if cust_id == str(cust_id) and (re.search(regex, cust_id)):
             cust_id = int(cust_id)
@@ -168,7 +166,6 @@ class ServiceAccessLayer(BankingServiceInterface):
         if type(cust_id) == int:
             for i1, customer in enumerate(self.account_dao.customer_list):
                 if customer.customer_id == cust_id:
-                    new_cust = i1
                     self.account_dao.customer_list.pop(i1)
                     break
                 if customer == self.account_dao.customer_list[-1] and customer.customer_id != cust_id:
