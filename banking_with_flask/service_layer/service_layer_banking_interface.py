@@ -1,8 +1,12 @@
 from abc import ABC, abstractmethod
+
+from banking_with_flask.dal_layer.dao_banking_interface import AccountDAOInterface
 from banking_with_flask.entities.customer import Customer
 from banking_with_flask.entities.account import Account
 
 class BankingServiceInterface(ABC):
+    def __init__(self, account_dao: AccountDAOInterface):
+        self.account_dao = account_dao
 
     @abstractmethod
     def create_account(self, acct): #

@@ -13,10 +13,19 @@ account_dao = AccountDAOImp()
 # acct = Account(1, 1, 100)
 
 def test_create_acct_with_both_ids():
-    test_acct = Account(1, 1, 100)
-    result = account_dao.create_account(test_acct)
-    assert result.customer_id == 1000
+    try:
+        test_acct = Account(1, 1000, 100)
+        result = account_dao.create_account(test_acct)
+    except BadAccountInfo as e:
+        assert str(e) == ("Please pass in an integer for your Id")
 
+def test_create_acct_with_both_ids_non_object_fail():
+    try:
+        test_acct = True
+        result = account_dao.create_account(test_acct)
+        assert result.customer_id == 1000
+    except BadAccountInfo as e:
+        assert str(e) == "Please pass in an integer for your Id"
 
 def test_create_acct_with_both_ids_fail():
     try:
@@ -27,10 +36,12 @@ def test_create_acct_with_both_ids_fail():
 
 
 def test_add_cust_with_id():
-    test_cust = Customer("Terra", 1)
-    result = account_dao.add_customer(test_cust)
-    assert result.customer_id == 1000
-
+    try:
+        test_cust = Customer("Terra", 1)
+        result = account_dao.add_customer(test_cust)
+        assert result.customer_id == 1000
+    except BadAccountInfo as e:
+        assert str(e) == "Please pass in an integer for your Id"
 
 def test_add_cust_with_id_fail():
     try:
@@ -106,7 +117,7 @@ def test_get_acct_info_acct_id_fail_str():
     try:
         result = account_dao.get_first_account_information_acct_id("one_thousand")
     except BadAccountInfo as e:
-        assert str(e) == ("Please Enter a valid integer")
+        assert str(e) == ("Please pass in an integer for your Id")
 
 
 def test_get_acct_info_balance_success_int():
@@ -119,7 +130,7 @@ def test_get_acct_info_balance_success_str():
         result = account_dao.get_account_information_balance("1001")
         assert result == {"balance": 100}
     except BadAccountInfo as e:
-        assert str(e) == "Customer Id not found"
+        assert str(e) == "Please pass in an integer for your Id"
 
 
 def test_get_acct_info_balance_fail_str_words():
@@ -127,7 +138,7 @@ def test_get_acct_info_balance_fail_str_words():
         result = account_dao.get_account_information_balance("one_thousand_one")
         assert result == {"balance": 100}
     except BadAccountInfo as e:
-        assert str(e) == "Please provide a valid customer Id as an integer"
+        assert str(e) == "Please pass in an integer for your Id"
 
 
 def test_get_acct_info_balance_fail_int():
